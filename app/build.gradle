@@ -1,34 +1,110 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+kapt {
+    generateStubs = true
+}
+
+androidExtensions {
+    experimental = true
+}
+
+
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
+
     defaultConfig {
         applicationId "com.viksaa.dailupfi.app"
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary true
+    }
+    dataBinding {
+        enabled = true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
+            zipAlignEnabled true
+            manifestPlaceholders.appName = "DailUpFi"
+            versionNameSuffix "_build"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            versionNameSuffix "_debug_" + "build"
+            manifestPlaceholders.appName = "DailUpFi"
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+    signingConfigs {
+        release {
+            storeFile file(getPropertyValue('keystore.properties', 'storePath'))
+            storePassword getPropertyValue('keystore.properties', 'storePass')
+            keyAlias getPropertyValue('keystore.properties', 'alias')
+            keyPassword getPropertyValue('keystore.properties', 'pass')
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
+
+    //kotlin
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:design:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.core:core-ktx:$rootProject.androidKTXVersion"
+
+    //support
+    implementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+    implementation "com.android.support:design:$rootProject.supportVersion"
+
+    //test
+    testImplementation "junit:junit:$rootProject.jUnitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    //third party
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$rootProject.leakCanaryVersion"
 }
+
+
+task setAPKName() {
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def date = new Date().format("yyyy_MM_dd_HH_mm")
+            def newApkName = variant.buildType.manifestPlaceholders.appName + variant.buildType.versionNameSuffix + "_" + date + ".apk"
+            output.outputFileName = newApkName
+        }
+    }
+}
+
+gradle.taskGraph.whenReady {
+    setAPKName
+}
+
+//get property file method
+def getPropertyValue(propertyFileName, propertyName) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file(propertyFileName).newDataInputStream())
+    return properties[propertyName]
+}
+
