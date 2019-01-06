@@ -1,7 +1,7 @@
 package com.viksaa.dailupfi.app.view
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.viksaa.dailupfi.app.presenter.BaseContract
 
 abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>> : AppCompatActivity(), BaseContract.View {

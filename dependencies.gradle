@@ -10,8 +10,8 @@ ext {
     /* Libraries */
 
     //Native libraries
-    supportVersion = "28.0.0"
-    designVersion = "28.0.0"
+    supportVersion = "1.1.0-alpha01"
+    designVersion = "1.1.0-alpha02"
     lifecycleExtensionsVersion = "1.1.1"
     constraintLayoutVersion = "1.1.3"
     androidKTXVersion = "1.0.1"

@@ -10,8 +10,6 @@ androidExtensions {
     experimental = true
 }
 
-
-
 android {
     compileSdkVersion 28
 
@@ -41,10 +39,10 @@ android {
         debug {
             versionNameSuffix "_debug_" + "build"
             manifestPlaceholders.appName = "DailUpFi"
-            minifyEnabled true
-            debuggable false
-            shrinkResources true
-            zipAlignEnabled true
+            minifyEnabled false
+            debuggable true
+            shrinkResources false
+            zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -71,9 +69,9 @@ dependencies {
     implementation "androidx.core:core-ktx:$rootProject.androidKTXVersion"
 
     //support
-    implementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
-    implementation "com.android.support:design:$rootProject.supportVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.supportVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "com.google.android.material:material:$rootProject.designVersion"
 
     //test
     testImplementation "junit:junit:$rootProject.jUnitVersion"
