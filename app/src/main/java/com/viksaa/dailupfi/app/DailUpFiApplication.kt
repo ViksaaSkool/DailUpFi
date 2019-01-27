@@ -1,4 +1,4 @@
-package com.viksaa.dailupfi.app.domain
+package com.viksaa.dailupfi.app
 
 import android.app.Application
 
