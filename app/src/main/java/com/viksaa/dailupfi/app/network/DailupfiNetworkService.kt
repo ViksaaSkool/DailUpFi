@@ -5,7 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.IBinder
 import com.viksaa.dailupfi.app.extensions.createChangeConnectivityMonitor
-import com.viksaa.dailupfi.app.extensions.log
+import com.viksaa.dailupfi.app.extensions.logD
 import com.viksaa.dailupfi.app.extensions.removeChangeConnectivityMonitor
 
 class DailupfiNetworkService : Service() {
@@ -15,7 +15,7 @@ class DailupfiNetworkService : Service() {
 
 
     override fun onBind(intent: Intent?): IBinder? {
-        log("onBind()")
+        logD("onBind()")
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -23,11 +23,11 @@ class DailupfiNetworkService : Service() {
         super.onCreate()
         dailUpFiNetworkCallback = DailUpFiNetworkCallback(this)
         createChangeConnectivityMonitor(dailUpFiNetworkCallback)
-        log("onCreate()")
+        logD("onCreate()")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        log("onStartCommand()")
+        logD("onStartCommand()")
         return super.onStartCommand(intent, flags, startId)
 
     }
@@ -35,7 +35,7 @@ class DailupfiNetworkService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        log("onDestroy()")
+        logD("onDestroy()")
         removeChangeConnectivityMonitor(dailUpFiNetworkCallback)
     }
 }
