@@ -12,9 +12,9 @@ import com.viksaa.dailupfi.app.BuildConfig.DEBUG
 private val Any.tag
     get() = javaClass.simpleName
 
-fun Any.log(context: Any, message: String) = apply {
+fun Any.log(message: String) = apply {
     if (BuildConfig.DEBUG)
-        Log.d(context.tag, message)
+        Log.d(this.tag, message)
 }
 
 /**

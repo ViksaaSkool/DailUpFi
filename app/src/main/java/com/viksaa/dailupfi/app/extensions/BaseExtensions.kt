@@ -1,6 +1,5 @@
 package com.viksaa.dailupfi.app.extensions
 
-import android.app.Activity
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -12,6 +11,8 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import java.io.FileDescriptor
+
 
 /**
  * If boolean var of interest is true return value after then
@@ -19,32 +20,24 @@ import androidx.fragment.app.Fragment
 infix fun <T> Boolean.then(value: T?) = if (this) value else null
 
 
-inline fun <T> Boolean.then(function: () -> T, default: () -> T)
-        = if (this) function() else default()
+inline fun <T> Boolean.then(function: () -> T, default: () -> T) = if (this) function() else default()
 
-infix inline fun <reified T> Boolean.then(function: () -> T)
-        = if (this) function() else null
+infix inline fun <reified T> Boolean.then(function: () -> T) = if (this) function() else null
 
-infix inline fun <reified T, reified Type> Type?.then(callback: (Type) -> T)
-        = if (this != null) callback(this) else null
+infix inline fun <reified T, reified Type> Type?.then(callback: (Type) -> T) = if (this != null) callback(this) else null
 
 
 fun Context.inflater() = LayoutInflater.from(this)
 
-fun Context.getCompatDrawable(@DrawableRes id: Int)
-        = ContextCompat.getDrawable(this, id)
+fun Context.getCompatDrawable(@DrawableRes id: Int) = ContextCompat.getDrawable(this, id)
 
-fun Context.getCompatColor(@ColorRes id: Int)
-        = ContextCompat.getColor(this, id)
+fun Context.getCompatColor(@ColorRes id: Int) = ContextCompat.getColor(this, id)
 
-fun Context.getDimension(@DimenRes id: Int)
-        = resources.getDimension(id)
+fun Context.getDimension(@DimenRes id: Int) = resources.getDimension(id)
 
-fun Context.getDimensionPixelOffset(@DimenRes id: Int)
-        = resources.getDimensionPixelOffset(id)
+fun Context.getDimensionPixelOffset(@DimenRes id: Int) = resources.getDimensionPixelOffset(id)
 
-fun Context.getDimensionPixelSize(@DimenRes id: Int)
-        = resources.getDimensionPixelSize(id)
+fun Context.getDimensionPixelSize(@DimenRes id: Int) = resources.getDimensionPixelSize(id)
 
 fun Context.isLandscape() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
@@ -54,25 +47,12 @@ fun Context.isPortrait() = resources.configuration.orientation == Configuration.
 
 
 /**
- * Start Activity from Activity, with or without bundle
- */
-inline fun <reified T : Activity> Context.startActivity(bundle: Bundle? = null) {
-    startActivity(Intent(this, T::class.java).putExtras(bundle))
-}
-
-/**
- * Start Activity from Fragment, with or without bundle
- */
-inline fun <reified T : Activity> Fragment.startActivity(bundle: Bundle? = null) {
-    startActivity(Intent(context, T::class.java).putExtras(bundle))
-}
-
-
-/**
- * Start Service from Fragment, with or without bundle
+ * Start Service from Context, with or without bundle
  */
 inline fun <reified T : Service> Context.startService(bundle: Bundle? = null) {
-    startService(Intent(this, T::class.java).putExtras(bundle))
+    startService(Intent(this, T::class.java).also {
+        if (bundle != null) it.putExtras(bundle)
+    })
 }
 
 /**
@@ -80,4 +60,9 @@ inline fun <reified T : Service> Context.startService(bundle: Bundle? = null) {
  */
 inline fun <reified T : Service> Fragment.startService(bundle: Bundle? = null) {
     context?.startService<T>(bundle)
+}
+
+
+fun Context.getFileDescriptor(filePath: String): FileDescriptor {
+    return this.assets.openFd(filePath).fileDescriptor
 }
