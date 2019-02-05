@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkInfo
 import android.net.NetworkRequest
 import com.viksaa.dailupfi.app.model.DailupfiNetworkStates
@@ -29,17 +28,6 @@ fun Context.createChangeConnectivityMonitor(networkCallback: ConnectivityManager
 fun Context.removeChangeConnectivityMonitor(networkCallback: ConnectivityManager.NetworkCallback) {
     (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
             .unregisterNetworkCallback(networkCallback)
-}
-
-fun Context.createChangeConnectivityMonitor() {
-    (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
-            .registerNetworkCallback(NetworkRequest.Builder().build(), object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network?) {
-                    super.onAvailable(network)
-                }
-            })
-
-
 }
 
 
