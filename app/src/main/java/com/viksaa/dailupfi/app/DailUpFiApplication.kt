@@ -6,10 +6,10 @@ import com.viksaa.dailupfi.app.network.DailupfiNetworkService
 
 class DailUpFiApplication : Application() {
 
+    var firstRun: Boolean = true
+
     override fun onCreate() {
         super.onCreate()
-
-
         startService<DailupfiNetworkService>()
     }
 }

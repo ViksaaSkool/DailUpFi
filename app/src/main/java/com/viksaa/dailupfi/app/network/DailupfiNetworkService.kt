@@ -6,17 +6,15 @@ import android.media.MediaPlayer
 import android.os.Binder
 import android.os.IBinder
 import com.viksaa.dailupfi.app.R
-import com.viksaa.dailupfi.app.extensions.createChangeConnectivityMonitor
-import com.viksaa.dailupfi.app.extensions.destroy
-import com.viksaa.dailupfi.app.extensions.logD
-import com.viksaa.dailupfi.app.extensions.removeChangeConnectivityMonitor
-import com.viksaa.dailupfi.app.model.DailupfiSoundHandler
+import com.viksaa.dailupfi.app.extensions.*
+import com.viksaa.dailupfi.app.model.DailupfiSoundListener
 
-class DailupfiNetworkService : Service(), DailupfiSoundHandler {
+class DailupfiNetworkService : Service(), DailupfiSoundListener {
 
 
-    private lateinit var dailUpFiNetworkCallback: DailUpFiNetworkCallback
+    private lateinit var dailupfiNetworkCallback: DailupfiNetworkCallback
     private lateinit var dailupFiMediaPlayer: MediaPlayer
+    private lateinit var dailupfiNetworkReceiver: DailupfiNetworkReceiver
     private var binder: DailupfiBinder = DailupfiBinder()
 
 
@@ -29,27 +27,33 @@ class DailupfiNetworkService : Service(), DailupfiSoundHandler {
         super.onCreate()
         logD("onCreate()")
         dailupFiMediaPlayer = MediaPlayer.create(this, R.raw.dail_up_modem)
-        dailUpFiNetworkCallback = DailUpFiNetworkCallback(this, this as DailupfiSoundHandler)
-        createChangeConnectivityMonitor(dailUpFiNetworkCallback)
+        dailupfiNetworkCallback = DailupfiNetworkCallback(this)
+        dailupfiNetworkReceiver = DailupfiNetworkReceiver()
+        dailupfiNetworkReceiver.addDailupfiListner(this)
+        registerReceiver(dailupfiNetworkReceiver, createDailupfiNetworkIntentFilter())
+        createChangeConnectivityMonitor(dailupfiNetworkCallback)
 
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return START_STICKY
     }
 
     override fun playDailupSound() {
         logD("playDailupSound()")
         if (!dailupFiMediaPlayer.isPlaying) {
-            dailupFiMediaPlayer.prepare()
-            dailupFiMediaPlayer.setOnPreparedListener { it ->
-                it.start()
-            }
-        }
+            dailupFiMediaPlayer.start()
 
+        }
     }
+
 
     override fun stopDailupSound() {
         logD("stopDailupSound()")
         if (dailupFiMediaPlayer.isPlaying) {
             dailupFiMediaPlayer.stop()
             dailupFiMediaPlayer.seekTo(0)
+            dailupFiMediaPlayer = MediaPlayer.create(this, R.raw.dail_up_modem)
         }
     }
 
@@ -62,7 +66,9 @@ class DailupfiNetworkService : Service(), DailupfiSoundHandler {
     override fun onDestroy() {
         super.onDestroy()
         logD("onDestroy()")
-        removeChangeConnectivityMonitor(dailUpFiNetworkCallback)
+        removeChangeConnectivityMonitor(dailupfiNetworkCallback)
+        dailupfiNetworkReceiver.removeDailupfiListner(this)
+        unregisterReceiver(dailupfiNetworkReceiver)
         dailupFiMediaPlayer.destroy()
     }
 
@@ -72,3 +78,4 @@ class DailupfiNetworkService : Service(), DailupfiSoundHandler {
             get() = this@DailupfiNetworkService
     }
 }
+
