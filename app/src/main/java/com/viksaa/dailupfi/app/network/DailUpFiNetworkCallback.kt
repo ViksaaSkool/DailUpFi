@@ -7,7 +7,7 @@ import com.viksaa.dailupfi.app.extensions.createDailupfiNetworkIntent
 import com.viksaa.dailupfi.app.extensions.logD
 import com.viksaa.dailupfi.app.model.DailupfiNetworkStates
 
-class DailupfiNetworkCallback(val context: Context) : ConnectivityManager.NetworkCallback() {
+class DailUpFiNetworkCallback(val context: Context) : ConnectivityManager.NetworkCallback() {
 
     override fun onAvailable(network: Network?) {
         super.onAvailable(network)

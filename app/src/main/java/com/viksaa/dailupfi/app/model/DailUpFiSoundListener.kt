@@ -1,6 +1,6 @@
 package com.viksaa.dailupfi.app.model
 
-interface DailupfiSoundListener {
+interface DailUpFiSoundListener {
 
     fun playDailupSound()
 

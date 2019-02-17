@@ -6,14 +6,14 @@ import android.content.Intent
 import com.viksaa.dailupfi.app.extensions.DAILUPFI_NETWORK_INTENT
 import com.viksaa.dailupfi.app.extensions.DAILUPFI_NETWORK_STATE
 import com.viksaa.dailupfi.app.extensions.logD
-import com.viksaa.dailupfi.app.model.DailupfiAnimationListener
+import com.viksaa.dailupfi.app.model.DailUpFiAnimationListener
+import com.viksaa.dailupfi.app.model.DailUpFiSoundListener
 import com.viksaa.dailupfi.app.model.DailupfiNetworkStates
-import com.viksaa.dailupfi.app.model.DailupfiSoundListener
 
-class DailupfiNetworkReceiver : BroadcastReceiver() {
+class DailUpFiNetworkReceiver : BroadcastReceiver() {
 
-    private var dailupfiSoundListener: MutableSet<DailupfiSoundListener> = hashSetOf<DailupfiSoundListener>()
-    private var dailupfiAnimationListener: MutableSet<DailupfiAnimationListener> = hashSetOf<DailupfiAnimationListener>()
+    private var mDailUpFiSoundListener: MutableSet<DailUpFiSoundListener> = hashSetOf<DailUpFiSoundListener>()
+    private var mDailUpFiAnimationListener: MutableSet<DailUpFiAnimationListener> = hashSetOf<DailUpFiAnimationListener>()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == DAILUPFI_NETWORK_INTENT) {
@@ -31,10 +31,10 @@ class DailupfiNetworkReceiver : BroadcastReceiver() {
      * Add listeners to the appropriate set
      */
     fun addDailupfiListner(l: Any) {
-        if (l is DailupfiSoundListener) {
-            dailupfiSoundListener.add(l)
-        } else if (l is DailupfiAnimationListener) {
-            dailupfiAnimationListener.add(l)
+        if (l is DailUpFiSoundListener) {
+            mDailUpFiSoundListener.add(l)
+        } else if (l is DailUpFiAnimationListener) {
+            mDailUpFiAnimationListener.add(l)
         }
     }
 
@@ -43,10 +43,10 @@ class DailupfiNetworkReceiver : BroadcastReceiver() {
      */
     fun removeDailupfiListner(l: Any) {
 
-        if (l is DailupfiSoundListener) {
-            dailupfiSoundListener.remove(l)
-        } else if (l is DailupfiAnimationListener) {
-            dailupfiAnimationListener.remove(l)
+        if (l is DailUpFiSoundListener) {
+            mDailUpFiSoundListener.remove(l)
+        } else if (l is DailUpFiAnimationListener) {
+            mDailUpFiAnimationListener.remove(l)
         }
     }
 
@@ -57,7 +57,7 @@ class DailupfiNetworkReceiver : BroadcastReceiver() {
      */
     private fun notifyState(connected: Boolean) {
 
-        dailupfiAnimationListener.takeIf { !it.isEmpty() }.apply {
+        mDailUpFiAnimationListener.takeIf { !it.isEmpty() }.apply {
             logD("notifyState() | dailupfiAnimationListener connected = $connected; dailupfiAnimationListener size = ${this?.size}")
             this?.forEach {
                 if (connected) {
@@ -69,7 +69,7 @@ class DailupfiNetworkReceiver : BroadcastReceiver() {
         }
 
 
-        dailupfiSoundListener.takeIf { !it.isEmpty() }.apply {
+        mDailUpFiSoundListener.takeIf { !it.isEmpty() }.apply {
             logD("notifyState() | dailupfiSoundListener connected = $connected; dailupfiSoundListener size = ${this?.size}")
             this?.forEach {
                 if (connected) {

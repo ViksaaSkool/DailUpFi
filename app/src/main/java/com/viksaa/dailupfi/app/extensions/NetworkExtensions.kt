@@ -13,6 +13,7 @@ const val DAILUPFI_NETWORK_INTENT: String = "dailupfi_network_intent"
 const val DAILUPFI_NETWORK_STATE: String = "dailupfi_network_state"
 
 
+
 /** EXTENSION METHODS **/
 fun Context.getNetworkInfo(): NetworkInfo = (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 
