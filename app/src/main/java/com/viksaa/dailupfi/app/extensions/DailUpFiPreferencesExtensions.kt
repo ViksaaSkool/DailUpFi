@@ -6,9 +6,12 @@ import android.content.SharedPreferences
 
 const val DAILUPFI_PREFERENCES: String = "dailupfi_preferences"
 const val DAILUPFI_ON_KEY: String = "dailupfi_on_key"
-const val DAILUPFI_FIRST_RUN_KEY: String = "dailupfi_first_run_key"
+const val DAILUPFI_INTRO_SEEN_KEY: String = "dailupfi_intro_seen_key"
 
 
+/**
+ * Generic for get
+ */
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T> SharedPreferences.get(key: String, defaultValue: T): T {
     when (T::class) {
@@ -27,6 +30,9 @@ inline fun <reified T> SharedPreferences.get(key: String, defaultValue: T): T {
     return defaultValue
 }
 
+/**
+ * Generic for put
+ */
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T> SharedPreferences.put(key: String, value: T) {
     val editor = this.edit()
@@ -47,6 +53,24 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T) {
     editor.apply()
 }
 
-inline fun Context.getDailUpFiPreferences(): SharedPreferences {
+/**
+ * Get appropriate shared preference
+ */
+fun Context.getDailUpFiPreferences(): SharedPreferences {
     return this.getSharedPreferences(DAILUPFI_PREFERENCES, Context.MODE_PRIVATE)
+}
+
+
+/**
+ * Get if the Intro screen has been shown - if the on-boarding process has finished
+ */
+fun Context.isIntroSeen(): Boolean {
+    return this.getDailUpFiPreferences().get(DAILUPFI_INTRO_SEEN_KEY, false)
+}
+
+/**
+ * Set the flag for finished on-boarding process to true
+ */
+fun Context.setIntroSeen() {
+    this.getDailUpFiPreferences().put(DAILUPFI_INTRO_SEEN_KEY, true)
 }
