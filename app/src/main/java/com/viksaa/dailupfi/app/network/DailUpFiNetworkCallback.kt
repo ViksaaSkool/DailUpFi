@@ -23,8 +23,9 @@ class DailUpFiNetworkCallback(val context: Context) : ConnectivityManager.Networ
 
     override fun onLost(network: Network?) {
         super.onLost(network)
-        logD("onLost() ")
+        logD("onLost() | ")
         createDailupfiNetworkIntent(DailupfiNetworkStates.LOST).also { context.sendBroadcast(it) }
+
     }
 
 }

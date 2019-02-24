@@ -42,9 +42,9 @@ fun Any.logE(message: String) = apply {
  * Logs only will be shown in DEBUG mode with custom tag
  *
  */
-fun log(tag: String, message: String) {
+fun Any.log(tag: String, message: String) {
     if (DEBUG)
-        Log.d(tag, message)
+        Log.d("$tag | ${this.tag}", message)
 }
 
 /**

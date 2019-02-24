@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryOn</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOn</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -16,5 +16,23 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DailupFiThemeSplash" parent="AppTheme.NoActionBar">
+
+    </style>
+
+    <style name="DailupFiOffTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryOff</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOff</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryOff</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="DailupFiOnTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryOn</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOn</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryOn</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 </resources>

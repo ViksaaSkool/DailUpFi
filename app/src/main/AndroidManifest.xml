@@ -34,7 +34,7 @@
         </activity>
 
         <service
-            android:name=".network.DailupfiNetworkService"
+            android:name=".network.DailUpFiNetworkService"
             android:enabled="true" />
     </application>
 
