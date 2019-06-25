@@ -57,7 +57,7 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T) {
  * Get appropriate shared preference
  */
 fun Context.getDailUpFiPreferences(): SharedPreferences {
-    return this.getSharedPreferences(DAILUPFI_PREFERENCES, Context.MODE_PRIVATE)
+    return getSharedPreferences(DAILUPFI_PREFERENCES, Context.MODE_PRIVATE)
 }
 
 
@@ -65,12 +65,21 @@ fun Context.getDailUpFiPreferences(): SharedPreferences {
  * Get if the Intro screen has been shown - if the on-boarding process has finished
  */
 fun Context.isIntroSeen(): Boolean {
-    return this.getDailUpFiPreferences().get(DAILUPFI_INTRO_SEEN_KEY, false)
+    return getDailUpFiPreferences().get(DAILUPFI_INTRO_SEEN_KEY, false)
 }
 
 /**
  * Set the flag for finished on-boarding process to true
  */
 fun Context.setIntroSeen() {
-    this.getDailUpFiPreferences().put(DAILUPFI_INTRO_SEEN_KEY, true)
+    getDailUpFiPreferences().put(DAILUPFI_INTRO_SEEN_KEY, true)
+}
+
+
+fun Context.isDailUpFiOn(): Boolean {
+    return getDailUpFiPreferences().get(DAILUPFI_ON_KEY, true)
+}
+
+fun Context.setDailUpFiOn() {
+    getDailUpFiPreferences().put(DAILUPFI_ON_KEY, true)
 }

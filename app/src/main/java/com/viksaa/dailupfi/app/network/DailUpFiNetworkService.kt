@@ -4,17 +4,18 @@ import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
-import com.viksaa.dailupfi.app.R
 import com.viksaa.dailupfi.app.extensions.*
 import com.viksaa.dailupfi.app.model.DailUpFiSoundListener
+
 
 class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
 
 
-    private lateinit var mDailUpFiNetworkCallback: DailUpFiNetworkCallback
-    private lateinit var dailupFiMediaPlayer: MediaPlayer
-    private lateinit var mDailUpFiNetworkReceiver: DailUpFiNetworkReceiver
+    private lateinit var dailUpFiNetworkCallback: DailUpFiNetworkCallback
+    private lateinit var dailUpFiMediaPlayer: MediaPlayer
+    private lateinit var dailUpFiNetworkReceiver: DailUpFiNetworkReceiver
     private var binder: DailupfiBinder = DailupfiBinder()
 
 
@@ -25,13 +26,16 @@ class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
 
     override fun onCreate() {
         super.onCreate()
-        logD("onCreate()")
-        dailupFiMediaPlayer = MediaPlayer.create(this, R.raw.dail_up_modem)
-        mDailUpFiNetworkCallback = DailUpFiNetworkCallback(this)
-        mDailUpFiNetworkReceiver = DailUpFiNetworkReceiver()
-        mDailUpFiNetworkReceiver.addDailupfiListner(this)
-        registerReceiver(mDailUpFiNetworkReceiver, createDailupfiNetworkIntentFilter())
-        createChangeConnectivityMonitor(mDailUpFiNetworkCallback)
+        logD("onCreate() | Version: ${Build.VERSION.SDK_INT}")
+        //Android 9+
+        startDefaultForegroundService()
+        dailUpFiMediaPlayer = MediaPlayer.create(this, com.viksaa.dailupfi.app.R.raw.dail_up_modem)
+        dailUpFiNetworkCallback = DailUpFiNetworkCallback(this)
+        dailUpFiNetworkReceiver = DailUpFiNetworkReceiver()
+        dailUpFiNetworkReceiver.addDailupfiListner(this)
+        registerReceiver(dailUpFiNetworkReceiver, createDailupfiNetworkIntentFilter())
+        createChangeConnectivityMonitor(dailUpFiNetworkCallback)
+
 
     }
 
@@ -41,22 +45,19 @@ class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
 
     override fun playDailupSound() {
         logD("playDailupSound()")
-        if (!dailupFiMediaPlayer.isPlaying) {
-            dailupFiMediaPlayer.start()
-
+        if (isDailUpFiOn()) {
+            dailUpFiMediaPlayer.play()
         }
     }
-
 
     override fun stopDailupSound() {
         logD("stopDailupSound()")
-        if (dailupFiMediaPlayer.isPlaying) {
-            dailupFiMediaPlayer.stop()
-            dailupFiMediaPlayer.seekTo(0)
-            dailupFiMediaPlayer = MediaPlayer.create(this, R.raw.dail_up_modem)
+        if (dailUpFiMediaPlayer.isPlaying) {
+            dailUpFiMediaPlayer.stop()
+            dailUpFiMediaPlayer.seekTo(0)
+            dailUpFiMediaPlayer = MediaPlayer.create(this, com.viksaa.dailupfi.app.R.raw.dail_up_modem)
         }
     }
-
 
     override fun onUnbind(intent: Intent?): Boolean {
         logD("onUnbind()")
@@ -66,10 +67,10 @@ class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
     override fun onDestroy() {
         super.onDestroy()
         logD("onDestroy()")
-        removeChangeConnectivityMonitor(mDailUpFiNetworkCallback)
-        mDailUpFiNetworkReceiver.removeDailupfiListner(this)
-        unregisterReceiver(mDailUpFiNetworkReceiver)
-        dailupFiMediaPlayer.destroy()
+        removeChangeConnectivityMonitor(dailUpFiNetworkCallback)
+        dailUpFiNetworkReceiver.removeDailupfiListner(this)
+        unregisterReceiver(dailUpFiNetworkReceiver)
+        dailUpFiMediaPlayer.destroy()
     }
 
 
