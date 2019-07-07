@@ -3,6 +3,5 @@
     android:layout_width="match_parent"
     android:id="@+id/root_intro_splash"
     android:layout_height="match_parent">
-    
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
