@@ -8,12 +8,13 @@ import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.net.NetworkRequest
 import android.os.Build
-import com.viksaa.dailupfi.app.model.DailupfiNetworkStates
+import com.viksaa.dailupfi.app.network.listeners.DailupfiNetworkStates
 
 
 /** CONSTANTS **/
 const val DAILUPFI_NETWORK_INTENT: String = "dailupfi_network_intent"
 const val DAILUPFI_NETWORK_STATE: String = "dailupfi_network_state"
+const val DAILUPFI_ACTION_STOP_SERVICE: String = "stop_dailupfi_service"
 
 
 /** EXTENSION METHODS **/

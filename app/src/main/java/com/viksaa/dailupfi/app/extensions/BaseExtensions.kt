@@ -70,6 +70,9 @@ inline fun <reified T : Service> Context.startService(bundle: Bundle? = null) {
     }
 }
 
+/**
+ *  Handling Android 9+ service start - has to be a foregorund one
+ */
 fun Service.startDefaultForegroundService() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         val CHANNEL_ID = "default_channel"
@@ -88,6 +91,19 @@ fun Service.startDefaultForegroundService() {
 }
 
 /**
+ *
+ * Handling Android 9+ service stop - has to be a foregorund one
+ */
+fun Service.stopForegorundService(stopIntent: Intent) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+            stopIntent.action == DAILUPFI_ACTION_STOP_SERVICE) {
+        stopForeground(true)
+        stopSelf()
+    }
+}
+
+
+/**
  * Start Service from Fragment, with or without bundle
  */
 inline fun <reified T : Service> Fragment.startService(bundle: Bundle? = null) {
@@ -99,11 +115,21 @@ inline fun <reified T : Service> Fragment.startService(bundle: Bundle? = null) {
  * Stop Service from Context, with or without bundle
  */
 inline fun <reified T : Service> Context.stopService(bundle: Bundle? = null) {
-    stopService(Intent(this, T::class.java).also {
-        if (bundle != null) {
-            it.putExtras(bundle)
-        }
-    })
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        startService(Intent(this, T::class.java)
+                .apply {
+                    action = DAILUPFI_ACTION_STOP_SERVICE
+                })
+
+    } else {
+        stopService(Intent(this, T::class.java).also {
+            if (bundle != null) {
+                it.putExtras(bundle)
+            }
+        })
+    }
+
+
 }
 
 /**

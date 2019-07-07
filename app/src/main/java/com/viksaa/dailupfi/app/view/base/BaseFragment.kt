@@ -1,8 +1,8 @@
-package com.viksaa.dailupfi.app.view
+package com.viksaa.dailupfi.app.view.base
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.viksaa.dailupfi.app.presenter.BaseContract
+import com.viksaa.dailupfi.app.presenter.base.BaseContract
 
 abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>> : Fragment(), BaseContract.View {
 

@@ -6,14 +6,15 @@ import android.media.MediaPlayer
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import com.viksaa.dailupfi.app.DailUpFiApplication
 import com.viksaa.dailupfi.app.extensions.*
-import com.viksaa.dailupfi.app.model.DailUpFiSoundListener
+import com.viksaa.dailupfi.app.network.listeners.DailUpFiSoundListener
 
 
 class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
 
 
-    private lateinit var dailUpFiNetworkCallback: DailUpFiNetworkCallback
+    private lateinit var mDailUpFiNetworkCallbackImpl: DailUpFiNetworkCallbackImpl
     private lateinit var dailUpFiMediaPlayer: MediaPlayer
     private lateinit var dailUpFiNetworkReceiver: DailUpFiNetworkReceiver
     private var binder: DailupfiBinder = DailupfiBinder()
@@ -30,16 +31,16 @@ class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
         //Android 9+
         startDefaultForegroundService()
         dailUpFiMediaPlayer = MediaPlayer.create(this, com.viksaa.dailupfi.app.R.raw.dail_up_modem)
-        dailUpFiNetworkCallback = DailUpFiNetworkCallback(this)
-        dailUpFiNetworkReceiver = DailUpFiNetworkReceiver()
-        dailUpFiNetworkReceiver.addDailupfiListner(this)
+        mDailUpFiNetworkCallbackImpl = DailUpFiNetworkCallbackImpl(this)
+        setDailUpFiNetworkReceiver()
         registerReceiver(dailUpFiNetworkReceiver, createDailupfiNetworkIntentFilter())
-        createChangeConnectivityMonitor(dailUpFiNetworkCallback)
-
-
+        createChangeConnectivityMonitor(mDailUpFiNetworkCallbackImpl)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        intent?.let { stopIntent ->
+            stopForegorundService(stopIntent)
+        }
         return START_STICKY
     }
 
@@ -67,7 +68,7 @@ class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
     override fun onDestroy() {
         super.onDestroy()
         logD("onDestroy()")
-        removeChangeConnectivityMonitor(dailUpFiNetworkCallback)
+        removeChangeConnectivityMonitor(mDailUpFiNetworkCallbackImpl)
         dailUpFiNetworkReceiver.removeDailupfiListner(this)
         unregisterReceiver(dailUpFiNetworkReceiver)
         dailUpFiMediaPlayer.destroy()
@@ -77,6 +78,12 @@ class DailUpFiNetworkService : Service(), DailUpFiSoundListener {
     inner class DailupfiBinder : Binder() {
         internal val service: DailUpFiNetworkService
             get() = this@DailUpFiNetworkService
+    }
+
+
+    private fun setDailUpFiNetworkReceiver() {
+        dailUpFiNetworkReceiver = (application as DailUpFiApplication).getDailUpFiNetworkReceiver()
+        dailUpFiNetworkReceiver.addDailupfiListner(this)
     }
 }
 

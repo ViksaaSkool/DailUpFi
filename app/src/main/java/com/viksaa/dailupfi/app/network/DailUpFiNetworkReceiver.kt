@@ -6,9 +6,9 @@ import android.content.Intent
 import com.viksaa.dailupfi.app.extensions.DAILUPFI_NETWORK_INTENT
 import com.viksaa.dailupfi.app.extensions.DAILUPFI_NETWORK_STATE
 import com.viksaa.dailupfi.app.extensions.logD
-import com.viksaa.dailupfi.app.model.DailUpFiAnimationListener
-import com.viksaa.dailupfi.app.model.DailUpFiSoundListener
-import com.viksaa.dailupfi.app.model.DailupfiNetworkStates
+import com.viksaa.dailupfi.app.network.listeners.DailUpFiAnimationListener
+import com.viksaa.dailupfi.app.network.listeners.DailUpFiSoundListener
+import com.viksaa.dailupfi.app.network.listeners.DailupfiNetworkStates
 
 class DailUpFiNetworkReceiver : BroadcastReceiver() {
 

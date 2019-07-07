@@ -73,6 +73,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.designVersion"
     implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
+    implementation "com.airbnb.android:lottie:$rootProject.lottieVersion"
 
 
     //test

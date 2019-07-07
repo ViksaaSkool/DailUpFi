@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">DailUpFi</string>
     <string name="action_settings">Settings</string>
+
+    <string name="text_dailupfi_on">DailUpFi On</string>
+    <string name="text_dailupfi_off">DailUpFi Off</string>
+
+    <string name="text_info_questions">Feel nostalgic for the 90\'s?\nReady for a throw back?\nReady for a sound blast from the past?</string>
+    <string name="text_info_answer">Just turn DailUpFi ON and every time you get connected to the Internets, you\'ll hear it</string>
+
+    <string name="text_letsgo">Let\'s go!</string>
+
+
 </resources>

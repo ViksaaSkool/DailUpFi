@@ -1,4 +1,4 @@
-package com.viksaa.dailupfi.app.model
+package com.viksaa.dailupfi.app.network.listeners
 
 enum class DailupfiNetworkStates(val state: String) {
     AVAILABLE("Available"),

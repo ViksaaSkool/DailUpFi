@@ -20,9 +20,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute"
         tools:replace="android:appComponentFactory">
-        <activity
-            android:name=".view.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".view.activity.IntroActivity"
@@ -34,6 +31,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.activity.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".network.DailUpFiNetworkService"
