@@ -71,6 +71,7 @@ fun AppCompatActivity.setTheme(isOn: Boolean) {
     } else {
         setTheme(R.style.DailupFiOffTheme)
     }
+    
 }
 
 fun View.setBackground(isOn: Boolean) {
