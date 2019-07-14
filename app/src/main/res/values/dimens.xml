@@ -1,9 +1,12 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="default_margin">16dp</dimen>
 
     <dimen name="dailup_logo_height">200dp</dimen>
     <dimen name="dailup_logo_width">190dp</dimen>
     <dimen name="dailup_logo_onoff_width">50dp</dimen>
     <dimen name="dailup_logo_onoff_height">45dp</dimen>
+
+    <dimen name="dailup_lottie_waves_width">100dp</dimen>
+    <dimen name="dailup_lottie_waves_height">80dp</dimen>
 
 </resources>

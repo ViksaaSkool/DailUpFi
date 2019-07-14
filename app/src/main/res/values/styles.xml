@@ -35,4 +35,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="DailUpFiSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/colorPrimaryOn</item>
+        <item name="android:thumb">@drawable/switch_on_off</item>
+        <item name="android:track">@drawable/switch_track</item>
+        <item name="colorAccent">@android:color/background_light</item>
+        <item name="colorSwitchThumbNormal">@android:color/darker_gray</item>
+        <item name="android:colorForeground">@android:color/background_light</item>
+
+    </style>
+
+    <style name="DailUpFiSwitch.text" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">#ffa000</item>
+        <item name="android:textSize">9dp</item>
+    </style>
+
 </resources>

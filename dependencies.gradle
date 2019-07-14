@@ -10,7 +10,7 @@ ext {
     /* Libraries */
 
     //Native libraries
-    supportVersion = "1.1.0-beta01"
+    supportVersion = "1.1.0-rc01"
     designVersion = "1.1.0-alpha07"
     lifecycleExtensionsVersion = "1.1.1"
     constraintLayoutVersion = "1.1.3"

@@ -71,15 +71,15 @@ fun Context.isIntroSeen(): Boolean {
 /**
  * Set the flag for finished on-boarding process to true
  */
-fun Context.setIntroSeen() {
-    getDailUpFiPreferences().put(DAILUPFI_INTRO_SEEN_KEY, true)
+fun Context.setIntroSeen(isSeen: Boolean) {
+    getDailUpFiPreferences().put(DAILUPFI_INTRO_SEEN_KEY, isSeen)
 }
 
 
 fun Context.isDailUpFiOn(): Boolean {
-    return getDailUpFiPreferences().get(DAILUPFI_ON_KEY, true)
+    return getDailUpFiPreferences().get(DAILUPFI_ON_KEY, false)
 }
 
-fun Context.setDailUpFiOn() {
-    getDailUpFiPreferences().put(DAILUPFI_ON_KEY, true)
+fun Context.setDailUpFiOn(isOn: Boolean) {
+    getDailUpFiPreferences().put(DAILUPFI_ON_KEY, isOn)
 }
