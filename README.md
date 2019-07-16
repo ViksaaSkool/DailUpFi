@@ -10,11 +10,11 @@ Ready for a throw back?
 
 Ready for a sound blast from the past?
 
-<img src="art/src_1.gif" width="190" height="280"/>
+<img src="https://github.com/ViksaaSkool/DailUpFi/blob/master/art/scr_1.gif" width="190" height="280"/>
 
-<img src="art/src_2.gif" width="190" height="280"/>
+<img src="https://github.com/ViksaaSkool/DailUpFi/blob/master/art/scr_2.gif" width="190" height="280"/>
 
-<img src="art/src_3.gif" width="190" height="280"/>
+<img src="https://github.com/ViksaaSkool/DailUpFi/blob/master/art/scr_3.gif" width="190" height="280"/>
 
 
 Just turn DailUpFi ON and every time you get connected to the Internets, you'll hear it - EVEN in the background. It's that 
