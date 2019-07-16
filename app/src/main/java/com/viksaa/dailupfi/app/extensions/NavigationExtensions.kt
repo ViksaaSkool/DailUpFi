@@ -52,3 +52,6 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int, addToBacksta
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { replace(frameId, fragment) }
 }
+
+
+fun Fragment.requireAppCompatActivity() = requireActivity() as AppCompatActivity

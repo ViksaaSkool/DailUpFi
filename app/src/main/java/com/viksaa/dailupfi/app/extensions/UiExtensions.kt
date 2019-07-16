@@ -7,6 +7,7 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.AnimationDrawable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.model.KeyPath
@@ -16,6 +17,7 @@ import com.viksaa.dailupfi.app.R
 const val ENTER_FADE_DURATION = 800
 const val EXIT_FADE_DURATION = 800
 const val WAVES_ANIMATION_DURATION = 27600L
+const val SPLASH_TEXT_LETTER_DELAY = 550L
 
 fun View.hide(isGone: Boolean = false) {
     visibility = isGone then View.GONE ?: View.INVISIBLE
@@ -71,7 +73,6 @@ fun AppCompatActivity.setTheme(isOn: Boolean) {
     } else {
         setTheme(R.style.DailupFiOffTheme)
     }
-    
 }
 
 fun View.setBackground(isOn: Boolean) {
@@ -80,4 +81,13 @@ fun View.setBackground(isOn: Boolean) {
     } else {
         context.getDrawable(com.viksaa.dailupfi.app.R.drawable.background_gradient_animation_on)
     }
+}
+
+fun AppCompatTextView.setText(isOn: Boolean) {
+    text = if (isOn) {
+        context.getString(R.string.text_dailupfi_on)
+    } else {
+        context.getString(R.string.text_dailupfi_off)
+    }
+
 }

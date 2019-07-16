@@ -5,12 +5,13 @@ import android.content.Context
 import android.os.Handler
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
+import com.viksaa.dailupfi.app.extensions.then
 
 
 class TypeWriterView : AppCompatTextView {
 
     companion object {
-        const val DEFAULT_DELAY = 1500L
+        const val DEFAULT_DELAY = 300L
         const val DEFAULT_INDEX = 0
     }
 
@@ -19,6 +20,8 @@ class TypeWriterView : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
 
+    private lateinit var typeWriterViewListener: TypeWriterViewListener
+    private fun isTypeWriterViewListenerInitialized() = ::typeWriterViewListener.isInitialized
     private var typeWriterText: CharSequence? = null
     private var index: Int = DEFAULT_INDEX
     var delay: Long = DEFAULT_DELAY
@@ -31,10 +34,16 @@ class TypeWriterView : AppCompatTextView {
             typeWriterText?.let {
                 if (index <= it.length) {
                     typeWriterAnimationHandler.postDelayed(this, delay)
+                } else {
+                    notifyTypeWritingEnded()
                 }
             }
 
         }
+    }
+
+    fun setTypeWriterViewListener(listener: TypeWriterViewListener) {
+        typeWriterViewListener = listener
     }
 
     fun animateText(inputText: CharSequence) {
@@ -52,4 +61,13 @@ class TypeWriterView : AppCompatTextView {
             typeWriterAnimationHandler.removeCallbacks(characterAdder)
         }
     }
+
+    private fun notifyTypeWritingEnded() {
+        if (isTypeWriterViewListenerInitialized()) {
+            typeWriterViewListener.onTypeWritingEnd(id)
+        }
+    }
+
+    fun getTotalAnimationDuration(): Long = (typeWriterText == null) then 0L
+            ?: typeWriterText!!.length * delay
 }

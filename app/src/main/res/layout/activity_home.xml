@@ -14,6 +14,27 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.85" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/status_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:text="@string/text_letsgo"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size_button"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/dail_up_fi_switch"
         style="@style/DailUpFiSwitch"
@@ -23,6 +44,8 @@
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:showText="true"
+        android:textOff="@string/text_dailupfi_off"
+        android:textOn="@string/text_dailupfi_on"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -34,9 +57,9 @@
         android:layout_height="@dimen/dailup_lottie_waves_height"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_rawRes="@raw/lottie_sound_animation" />
 

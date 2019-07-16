@@ -50,6 +50,7 @@ class HomeActivity : BaseActivity<HomeContract.View, HomePresenter>(), HomeContr
         switchDailUpFiService(isChecked)
         root_home_layout.startAnimationOnOff(isChecked)
         setTheme(isDailUpFiOn())
+        status_text_view.setText(isChecked)
         if (!isChecked) {
             animation_view.stopAnimation()
         }
@@ -71,6 +72,8 @@ class HomeActivity : BaseActivity<HomeContract.View, HomePresenter>(), HomeContr
         dail_up_fi_switch.setOnCheckedChangeListener(this)
         root_home_layout.setBackground(isDailUpFiOn())
         setTheme(isDailUpFiOn())
+        status_text_view.setText(isDailUpFiOn())
+
     }
 
     override fun onDestroy() {

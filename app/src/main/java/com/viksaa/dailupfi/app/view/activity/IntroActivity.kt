@@ -1,12 +1,12 @@
 package com.viksaa.dailupfi.app.view.activity
 
 
-import android.os.Handler
 import com.viksaa.dailupfi.app.R
-import com.viksaa.dailupfi.app.extensions.launchActivity
+import com.viksaa.dailupfi.app.extensions.replaceFragment
 import com.viksaa.dailupfi.app.presenter.IntroContract
 import com.viksaa.dailupfi.app.presenter.IntroPresenter
 import com.viksaa.dailupfi.app.view.base.BaseActivity
+import com.viksaa.dailupfi.app.view.fragment.IntroSplashFragment
 
 class IntroActivity : BaseActivity<IntroContract.View, IntroPresenter>(), IntroContract.View {
 
@@ -21,10 +21,7 @@ class IntroActivity : BaseActivity<IntroContract.View, IntroPresenter>(), IntroC
 
     override fun onStart() {
         super.onStart()
-
-        Handler().postDelayed({
-            launchActivity<HomeActivity>()
-        }, 3000)
+        replaceFragment(IntroSplashFragment(), R.id.intro_fragment_frame_layout)
     }
 
     override fun showThings() {
