@@ -1,4 +1,4 @@
-package com.viksaa.dailupfi.app.presenter
+package com.viksaa.dailupfi.app.presenter.base
 
 import java.lang.ref.WeakReference
 

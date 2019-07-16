@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_intro_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_red">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_button_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_button_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/letsgo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:background="@drawable/button_border"
+        android:padding="@dimen/button_padding"
+        android:text="@string/text_letsgo"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size_button"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_button_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_button_end" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_text_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <com.viksaa.dailupfi.app.widget.TypeWriterView
+        android:id="@+id/questions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:padding="@dimen/button_padding"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size_intro"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_button_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_button_start"
+        app:layout_constraintTop_toTopOf="@+id/guideline_text_top" />
+
+    <com.viksaa.dailupfi.app.widget.TypeWriterView
+        android:id="@+id/answers_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:padding="@dimen/button_padding"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size_intro"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_button_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_button_start"
+        app:layout_constraintTop_toBottomOf="@+id/questions_text_view" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

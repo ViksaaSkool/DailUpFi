@@ -4,24 +4,64 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.net.NetworkRequest
-import com.viksaa.dailupfi.app.model.DailupfiNetworkStates
+import android.os.Build
+import com.viksaa.dailupfi.app.network.listeners.DailupfiNetworkStates
+
 
 /** CONSTANTS **/
 const val DAILUPFI_NETWORK_INTENT: String = "dailupfi_network_intent"
 const val DAILUPFI_NETWORK_STATE: String = "dailupfi_network_state"
-
+const val DAILUPFI_ACTION_STOP_SERVICE: String = "stop_dailupfi_service"
 
 
 /** EXTENSION METHODS **/
-fun Context.getNetworkInfo(): NetworkInfo = (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 
-fun Context.isConnected(): Boolean = this.getNetworkInfo().isConnected
+fun Context.getConnectivityManager(): ConnectivityManager = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+
+fun Context.getNetworkInfo(): NetworkInfo = getConnectivityManager().activeNetworkInfo
+
+fun Context.hasActiveNetworkInfo(): Boolean = getConnectivityManager().activeNetworkInfo != null
+
+fun Context.isConnected(): Boolean = hasActiveNetworkInfo() && getNetworkInfo().isConnected
+
+fun Context.isConnecting(): Boolean = hasActiveNetworkInfo() && getNetworkInfo().detailedState == NetworkInfo.DetailedState.CONNECTING
+
+fun Context.isConnectedToWiFi(): Boolean {
+    return isConnected() && if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        val capabilities = getConnectivityManager().getNetworkCapabilities(getConnectivityManager().activeNetwork)
+        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+    } else {
+        getNetworkInfo().subtype == ConnectivityManager.TYPE_WIFI
+    }
+}
+
+/**
+ * Get the current state of the active network - logging purposes
+ */
+fun Context.getCurrentNetworkState(): String {
+    return if (hasActiveNetworkInfo()) {
+        getNetworkInfo().detailedState.name
+    } else {
+        ""
+    }
+}
+
+
+fun Context.isConnectedToCellular(): Boolean {
+    return isConnected() && if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        val capabilities = getConnectivityManager().getNetworkCapabilities(getConnectivityManager().activeNetwork)
+        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+    } else {
+        getNetworkInfo().subtype == ConnectivityManager.TYPE_MOBILE
+    }
+}
 
 
 fun Context.createChangeConnectivityMonitor(networkCallback: ConnectivityManager.NetworkCallback) {
-    (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+    (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
             .registerNetworkCallback(NetworkRequest.Builder().build(), networkCallback)
 }
 
@@ -36,6 +76,7 @@ fun Context.removeChangeConnectivityMonitor(networkCallback: ConnectivityManager
 
 fun createDailupfiNetworkIntent(dailupfiState: DailupfiNetworkStates): Intent = Intent().apply {
     action = DAILUPFI_NETWORK_INTENT
+    logD("createDailupfiNetworkIntent() | dailupfiState = ${dailupfiState.state}")
     putExtra(DAILUPFI_NETWORK_STATE, dailupfiState)
 }
 
