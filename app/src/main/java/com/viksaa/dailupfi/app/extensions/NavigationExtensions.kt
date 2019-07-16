@@ -33,10 +33,13 @@ inline fun <reified T : Fragment>
  *  Inline extension to do fragment transactions
  */
 inline fun FragmentManager.inTransaction(addToBackstack: String? = null, func: FragmentTransaction.() -> Unit) {
-    val fragmentTransaction = beginTransaction()
-    fragmentTransaction.func()
-    fragmentTransaction.addToBackStack(addToBackstack)
-    fragmentTransaction.commit()
+    beginTransaction().apply {
+        func()
+        addToBackstack?.let {
+            addToBackStack(it)
+        }
+        commit()
+    }
 }
 
 /**
