@@ -18,14 +18,14 @@ class IntroActivity : BaseActivity<IntroContract.View, IntroPresenter>(), IntroC
         setContentView(R.layout.activity_intro)
     }
 
-
     override fun onStart() {
         super.onStart()
         replaceFragment(IntroSplashFragment(), R.id.intro_fragment_frame_layout)
     }
 
-    override fun showThings() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAndRemoveTask()
+    }
 }

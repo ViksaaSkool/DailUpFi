@@ -30,7 +30,7 @@ class IntroInfoFragment : BaseFragment<IntroInfoContract.View, IntroInfoPresente
 
 
     override fun setLayout() {
-        layoutId = com.viksaa.dailupfi.app.R.layout.fragment_info
+        layoutId = R.layout.fragment_info
     }
 
     override fun createPresenter(): IntroInfoPresenter {
@@ -90,7 +90,7 @@ class IntroInfoFragment : BaseFragment<IntroInfoContract.View, IntroInfoPresente
             if (view.id == R.id.letsgo_button) {
                 requireAppCompatActivity().apply {
                     setIntroSeen(true)
-                    launchActivity<HomeActivity>()
+                    launchActivity<HomeActivity>(null, true)
                 }
 
             }

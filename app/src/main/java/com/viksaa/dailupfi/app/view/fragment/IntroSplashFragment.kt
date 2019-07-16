@@ -20,6 +20,18 @@ class IntroSplashFragment : BaseFragment<IntroSplashContract.View, IntroSplashPr
         private const val TRANSITION_DELAY = 1000L
     }
 
+    private val transitionHandler = Handler(Looper.getMainLooper())
+    private val transitionRunnable = Runnable {
+        requireAppCompatActivity().apply {
+            logD("isIntroSeen() = ${isIntroSeen()}")
+            if (isIntroSeen()) {
+                launchActivity<HomeActivity>(null, true)
+            } else {
+                replaceFragment(IntroInfoFragment(), R.id.intro_fragment_frame_layout)
+            }
+        }
+    }
+
     override fun createPresenter(): IntroSplashPresenter {
         return IntroSplashPresenter()
     }
@@ -31,7 +43,6 @@ class IntroSplashFragment : BaseFragment<IntroSplashContract.View, IntroSplashPr
     override fun onStart() {
         super.onStart()
         startAnimation()
-
     }
 
     private fun startAnimation() {
@@ -54,19 +65,20 @@ class IntroSplashFragment : BaseFragment<IntroSplashContract.View, IntroSplashPr
             setTypeWriterViewListener(this@IntroSplashFragment)
             animateText(text)
         }
-
     }
-
 
     override fun onTypeWritingEnd(viewId: Int) {
         logD("onTypeWritingEnd() | it ended!")
-        Handler(Looper.getMainLooper()).postDelayed({
-            requireAppCompatActivity().apply {
-                isIntroSeen() then launchActivity<HomeActivity>(null, true)
-                        ?: replaceFragment(IntroInfoFragment(), R.id.intro_fragment_frame_layout)
-            }
-        }, TRANSITION_DELAY)
+        dail_up_fi_text_view?.let {
+            transitionHandler.postDelayed(transitionRunnable, TRANSITION_DELAY)
+        }
 
     }
+
+    override fun onDetach() {
+        transitionHandler.removeCallbacks(transitionRunnable)
+        super.onDetach()
+    }
+
 
 }
