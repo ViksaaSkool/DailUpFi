@@ -22,6 +22,16 @@ annoying sound that we all love.
 It started out as a playground for learning Kotlin, as you can see it's meaningless enough that I finally pushed it trough the finish line.
 
 
+
+## Some takeaways from DailUpFi
+
+- very basic implementation VanillaMVP architecture
+- handling Internet connectivity and monitoring it on Android 9
+- look at the extensions for navigation (starting activities and fragments), Internet connectivity and starting services 
+- very basic animation stuff
+- TypeWritterView with listener for end event
+
+
 # License 
 
     The MIT License (MIT)
